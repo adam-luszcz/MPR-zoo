@@ -8,6 +8,9 @@ public class Zoo {
     private boolean isClosed;
     private List<Animal> animal;
 
+    public Zoo() {
+    }
+
     public Zoo(Integer id, String name, String location, boolean isClosed, List<Animal> animal) {
         this.id = id;
         this.name = name;

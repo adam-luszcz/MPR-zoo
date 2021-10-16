@@ -64,4 +64,16 @@ public class Animal {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "id=" + id +
+                ", specimen='" + specimen + '\'' +
+                ", diet=" + diet +
+                ", type=" + type +
+                ", isHungry=" + isHungry +
+                ", health=" + health +
+                '}';
+    }
 }

@@ -58,4 +58,17 @@ public class Zoo {
     public void setAnimal(List<Animal> animal) {
         this.animal = animal;
     }
+
+    @Override
+    public String toString() {
+        return "Zoo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", isClosed=" + isClosed +
+                ", animal=" + animal +
+                '}';
+    }
+
+
 }

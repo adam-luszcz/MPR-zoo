@@ -18,12 +18,11 @@ public class ZooApplication {
 
 		SpringApplication.run(ZooApplication.class, args);
 
-		Animal lion = new Animal(0, "lion", Diet.MEAT, Type.LAND, true, 100);
+		Animal lion = new Animal(1, "lion", Diet.MEAT, Type.LAND, true, 100);
 
-		List<Animal> animals = new ArrayList<>();
-		animals.add(lion);
+		Zoo zoo = new Zoo(1, "Zoo", "Gdansk", false, List.of(lion));
 
-
+		System.out.println(zoo);
 	}
 
 }

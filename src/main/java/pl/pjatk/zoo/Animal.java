@@ -1,11 +1,22 @@
 package pl.pjatk.zoo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Animals")
 public class Animal {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name = "specimen")
     private String specimen;
+    @Column(name = "diet")
     private Diet diet;
+    @Column(name = "type")
     private Type type;
+    @Column(name = "isHungry")
     private boolean isHungry;
+    @Column(name = "health")
     private int health;
 
     public Animal(Integer id, String specimen, Diet diet, Type type, boolean isHungry, int health) {
@@ -15,6 +26,10 @@ public class Animal {
         this.type = type;
         this.isHungry = isHungry;
         this.health = health;
+    }
+
+    public Animal() {
+
     }
 
     public int getId() {

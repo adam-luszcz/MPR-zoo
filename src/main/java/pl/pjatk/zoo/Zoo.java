@@ -1,11 +1,18 @@
 package pl.pjatk.zoo;
 import java.util.List;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Zoo")
 public class Zoo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private String location;
     private boolean isClosed;
+    @OneToMany
     private List<Animal> animal;
 
     public Zoo() {

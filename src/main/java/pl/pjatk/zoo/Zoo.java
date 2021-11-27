@@ -12,7 +12,7 @@ public class Zoo {
     private String name;
     private String location;
     private boolean isClosed;
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Animal> animal;
 
     public Zoo() {
@@ -76,6 +76,4 @@ public class Zoo {
                 ", animal=" + animal +
                 '}';
     }
-
-
 }

@@ -37,7 +37,7 @@ public class ZooService {
 
     public Zoo getZooById(Integer id) {
         Optional<Zoo> byId = zooRepository.findById(id);
-        return byId.orElseThrow(RuntimeException::new);
+        return byId.orElse(null);
     }
 
     public void addSuffixToName(Zoo zoo) {
@@ -87,4 +87,16 @@ public class ZooService {
             animal.setType(Type.LAND);
         }
     }
+
+    public boolean zooExistsById(Integer id) {
+        return zooRepository.existsById(id);
+    }
+
+    public void deleteZooById(Integer id) {
+        zooRepository.deleteById(id);
+    }
+    /*
+    -existsById
+    -deleteById
+     */
 }

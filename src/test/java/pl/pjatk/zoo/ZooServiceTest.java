@@ -1,14 +1,30 @@
 package pl.pjatk.zoo;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class ZooServiceTest {
+
+    @Mock
+    private ZooRepository zooRepository;
+
     //Inicjalizacja testowanego serwisu
-    private ZooService zooService = new ZooService(null);
+    @InjectMocks
+    private ZooService zooService;
     //Testy...
     @Test
     void shouldAddSuffixToName() {
@@ -123,4 +139,81 @@ class ZooServiceTest {
         //THEN
         assertThat(isLion).isTrue();
     }
+
+    @Test
+    void shouldFindById() {
+        when(zooRepository.findById(any()))
+                .thenReturn(Optional.of(new Zoo()));
+
+        Zoo byId = zooService.getZooById(10);
+
+        assertThat(byId).isNotNull();
+    }
+
+    @Test
+    void shouldNotFindById() {
+        when(zooRepository.findById(any()))
+                .thenReturn(Optional.empty());
+
+        Zoo byId = zooService.getZooById(1);
+
+        assertThat(byId).isNull();
+    }
+
+    @Test
+    void getAll() {
+        List<Zoo> zoos = List.of(new Zoo());
+        when(zooRepository.findAll())
+                .thenReturn(zoos);
+
+        List<Zoo> allZoos = zooService.getFullZoo();
+
+        assertThat(allZoos).hasSize(zoos.size());
+    }
+
+    @Test
+    void getAllEmpty() {
+        List<Zoo> zooList = List.of();
+        when(zooRepository.findAll()).thenReturn(zooList);
+
+        List<Zoo> zoos = zooService.getFullZoo();
+
+        assertThat(zoos).isEmpty();
+    }
+
+    @Test
+    void shouldExistById() {
+        when(zooRepository.existsById(any()))
+                .thenReturn(true);
+
+        boolean zooExistsById = zooService.zooExistsById(1);
+
+        assertThat(zooExistsById).isTrue();
+
+    }
+
+    @Test
+    void shouldNotExistById() {
+        when(zooRepository.existsById(any()))
+                .thenReturn(false);
+
+        boolean zooExistsById = zooService.zooExistsById(1);
+
+        assertThat(zooExistsById).isFalse();
+
+    }
+
+    @Test
+    void shouldDelete() {
+        //tylko do metod void
+        doNothing().when(zooRepository).deleteById(any());
+
+        zooService.deleteZooById(1);
+        verify(zooRepository, times(1)).deleteById(any());
+    }
+
+    //shouldNotFindByID -> repo zwraca Optional.empty()
+    //getAll -> ci jak zwroci x elementow, co jak zwroci pusta liste
+    //zooExistsById -> co jak exists a co jak nie exists
+    //deleteZooById -> sprawdzic czy wywolane
 }
